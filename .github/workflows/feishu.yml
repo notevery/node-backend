@@ -26,4 +26,6 @@ jobs:
       with:
         uuid: 22085f64-95b1-4445-b8fa-a371ed6b0453
         data: |
-          {"msg_type":"text","content":{"text":"test data from test runs"}}
+          {"msg_type":"post","content":{"post":{"zh_cn":{"title":"${{ github.GITHUB_REPOSITORY }}流水线状态通知",
+          "content":[[{"tag":"text","text":"${{ github.GITHUB_REPOSITORY }} 项目流水线有更新: "},
+          {"tag":"a","text":"$message","href":"$href_url"}]]}}}}
