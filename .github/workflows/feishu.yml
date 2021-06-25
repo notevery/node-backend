@@ -18,7 +18,7 @@ jobs:
       with:
         registry: harbor.longguikeji.com
         username: ${{ secrets.HARBORUSER }}
-        password: ${{ secrets.HARBORPWD }}
+        password: ${{ secrets.HARBORPWDS }}
     - name: Build and push
       uses: docker/build-push-action@v2
       with:
@@ -34,4 +34,4 @@ jobs:
         data: |
           {"msg_type":"post","content":{"post":{"zh_cn":{"title":"${{ github.GITHUB_REPOSITORY }}流水线状态通知",
           "content":[[{"tag":"text","text":"${{ github.GITHUB_REPOSITORY }} 项目流水线有更新: "},
-          {"tag":"a","text":"$message","href":"$href_url"}]]}}}}
+          {"tag":"a","text":${{ job.status }},"href":"$href_url"}]]}}}}
