@@ -21,3 +21,9 @@ jobs:
           committer: ${{ github.actor }}
           compare: ${{ github.event.compare }}
           job status: ${{ job.status }}
+    - name: Feishu2
+      uses: wangsijie/feishu-bot@v1
+      with:
+        uuid: 22085f64-95b1-4445-b8fa-a371ed6b0453
+        data: |
+          {"msg_type":"text","content":{"text":"test data from test runs"}}
