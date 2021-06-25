@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  portal:
+    image: nginx:alpine
+    container_name: demo-portal
+    restart: always
+    ports:
+      - 8999:80
+    depends_on:
+      - be
+      - fe
+    volumes:
+      - ./portal.conf:/etc/nginx/conf.d/default.conf
+
+  be:
+    image: node:1
+    container_name: demo-be
+    restart: always
+  fe:
+    image: oauth:1
+    container_name: demo-fe
+    restart: always
+    

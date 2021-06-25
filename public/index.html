@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="author" content="Kodinger">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>My Login Page</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="css/my-login.css">
+</head>
+
+<body class="my-login-page">
+	<section class="h-100">
+		<div class="container h-100">
+			<div class="row justify-content-md-center h-100">
+				<div class="card-wrapper">
+					<h1>a oauth2.0 client demo</h1>
+					<div class="brand">
+						<img src="img/logo.jpg" alt="logo">
+					</div>
+					<div class="card fat">
+						<div class="card-body">
+							<h4 class="card-title">Login</h4>
+							<form method="POST" class="my-login-validation" novalidate="">
+								<div class="form-group">
+									<label for="email">E-Mail Address</label>
+									<input id="email" type="email" class="form-control" name="email" value="" required autofocus>
+									<div class="invalid-feedback">
+										Email is invalid
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="password">Password
+										<a href="forgot.html" class="float-right">
+											Forgot Password?
+										</a>
+									</label>
+									<input id="password" type="password" class="form-control" name="password" required data-eye>
+								    <div class="invalid-feedback">
+								    	Password is required
+							    	</div>
+								</div>
+
+								<div class="form-group">
+									<div class="custom-checkbox custom-control">
+										<input type="checkbox" name="remember" id="remember" class="custom-control-input">
+										<label for="remember" class="custom-control-label">Remember Me</label>
+									</div>
+								</div>
+
+								<div class="form-group m-0">
+									<button type="submit" class="btn btn-primary btn-block">
+										Login
+									</button>
+								</div>
+								<div class="mt-4 text-center">
+									Don't have an account? <a href="register.html">Create One</a>
+								</div>
+							</form>
+							<div class="more-sign">
+    <h6>第三方账号登录</h6>
+    <ul>
+
+  <li id="arkid-link-wrap" class="">
+    <a class="arkid" id="arkid-link" target="_blank" href="https://arkid.demo.longguikeji.com/oauth/authorize/?response_type=code&state=xyz&scope=read&client_id=abcn82LQg9kXrVsI7CC0QG2Zap6SM6K4REsHQOl0&redirect_uri=http://124.70.55.171:8998/oauth/redirect">
+      <i class="iconfont ic-arkid"></i>
+    </a>
+  </li>
+  <li id="weibo-link-wrap" class="">
+    <a class="weibo" id="weibo-link">
+      <i class="iconfont ic-weibo"></i>
+    </a>
+  </li>
+  <li><a id="weixin" class="weixin" target="_blank" href="/users/auth/wechat"><i class="iconfont ic-wechat"></i></a></li>
+  <li><a id="qq" class="qq" target="_blank" href="/users/auth/qq_connect"><i class="iconfont ic-qq_connect"></i></a></li>
+</ul>
+
+    <div class="weibo-geetest-captcha"></div>
+</div>
+
+						</div>
+					</div>
+					<div class="footer">
+						Copyright &copy; 2017 &mdash; Your Company 
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script src="js/my-login.js"></script>
+	<script>
+	  
+  const url = window.location.href;
+  
+  console.log(url);
+  if (window.XMLHttpRequest) { // Mozilla, Safari, IE7+ ...
+    httpRequest = new XMLHttpRequest();
+  } else if (window.ActiveXObject) { // IE 6 and older
+    httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+
+  //httpRequest.addEventListener("load", reqListener);
+  //xhr.open(method, url, async, username, password);
+  httpRequest.open("GET", `${url}oauth/info`, false);
+  httpRequest.send();
+  console.log(httpRequest.responseText);
+  const res =  JSON.parse(httpRequest.responseText);
+  console.log(res);
+  console.log(typeof res);
+  const client_id = res.client_id;
+  const authorize_uri = res.authorize_uri;
+  const redirect_uri = res.redirect_uri;
+
+  const link = document.getElementById('arkid-link');
+  link.href = `${authorize_uri}?response_type=code&state=xyz&scope=read&client_id=${client_id}&redirect_uri=${redirect_uri}`;
+</script>
+</body>
+</html>
