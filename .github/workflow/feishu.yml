@@ -1,0 +1,23 @@
+name: 测试飞书
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: FeishuT
+      uses: foxundermoon/feishu-action@v1
+      with:
+        url: ${{ secrets.FEISHU_BOT_WEBHOOK_URL }}
+        title: notice
+        text: |
+          from github action test
+          repository: ${{ github.repository }}
+          committer: ${{ github.actor }}
+          compare: ${{ github.event.compare }}
+          job status: ${{ job.status }}
