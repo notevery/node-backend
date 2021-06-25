@@ -33,7 +33,7 @@ jobs:
       with:
         uuid: ${{ secrets.FEISHU_UUID }}
         data: |
-          {"msg_type":"post","content":{"post":{"zh_cn":{"title":"${{ github.GITHUB_REPOSITORY }}流水线状态通知",
+          {"msg_type":"post","content":{"post":{"zh_cn":{"title":"\$\{\{ github.GITHUB_REPOSITORY \}\}流水线状态通知",
           "content":[[{"tag":"text","text":"${{ github.GITHUB_REPOSITORY }} 项目流水线有更新: "},
           {"tag":"a","text":"构建失败","href":"http://arkid.vtwo.longguikeji.com/"}]]}}}}
     - name: Feishu 报喜
@@ -42,6 +42,6 @@ jobs:
       with:
         uuid: ${{ secrets.FEISHU_UUID }}
         data: |
-          {"msg_type":"post","content":{"post":{"zh_cn":{"title":"${{ github.GITHUB_REPOSITORY }}流水线状态通知",
+          {"msg_type":"post","content":{"post":{"zh_cn":{"title":"\$\{\{ github.GITHUB_REPOSITORY \}\}流水线状态通知",
           "content":[[{"tag":"text","text":"${{ github.GITHUB_REPOSITORY }} 项目流水线有更新: "},
           {"tag":"a","text":"构建并部署成功","href":"http://arkid.vtwo.longguikeji.com/"}]]}}}}
