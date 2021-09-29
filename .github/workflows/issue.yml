@@ -10,6 +10,7 @@ jobs:
     steps:
       - name: Create Issue Branch
         uses: robvanderleek/create-issue-branch@main
-        branchName: 'feature-${issue.number}-${issue.title}'
+        with:
+          branchName: 'feature-${issue.number}-${issue.title}'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
