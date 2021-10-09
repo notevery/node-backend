@@ -21,5 +21,5 @@ jobs:
           uuid: ${{ secrets.FEISHU_UUID }}
           data: |
             {"msg_type":"post","content":{"post":{"zh_cn":{"title":"${{ env.PR_USER }} 发起PR：(${{ env.PR_TITLE }})",
-            "content":[[{"tag":"text","text":"请大家帮忙review: "},
+            "content":[[{"tag":"text","text":"[送心]请大家帮忙review: "},
             {"tag":"a","text":"🔗链接${{ env.PR_URL}}","href":"${{ env.PR_URL}}"}]]}}}}
