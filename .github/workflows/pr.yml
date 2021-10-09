@@ -15,3 +15,10 @@ jobs:
       # 打印环境变量
       - name: print env
         run: printenv
+      - name: Feishu 通知review
+        uses: wangsijie/feishu-bot@v1
+        with:
+          uuid: ${{ secrets.FEISHU_UUID }}
+          data: |
+            ${{ env.PR_USER }} 发起PR：(${{ env.PR_TITLE }}), 请大家帮忙review  \n 
+            🔗链接：${{ env.PR_URL}}
