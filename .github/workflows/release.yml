@@ -2,18 +2,16 @@ name: release to harbor
 
 on:
   workflow_dispatch:
+    inputs:
+      prod_version:
+        description: 'the tag of the charts to release, like `2.0.1`'
+        default: ''
+        required: true
 
 jobs:
   package2harbor:
     runs-on: ubuntu-latest
     steps:
-    - uses: azure/setup-helm@v1
-      with:
-        version: '3.7.2' # default is latest stable
-      id: installhelm
-    - id: helmrepoadd
-      run: helm repo add arkid https://harbor.longguikeji.com/chartrepo/public
-    - run: helm repo list
     - uses: actions/checkout@v2
       with:
         # Repository name with owner. For example, actions/checkout
@@ -23,6 +21,16 @@ jobs:
         # The branch, tag or SHA to checkout. When checking out the repository that
         # triggered a workflow, this defaults to the reference or SHA for that event.
         # Otherwise, uses the default branch.
+        # git仓库的Tags == Chart.yaml/appVersion 
+        # 每次修改chart都要更新一下appVersion的小版本号
+        # 还需要写一个发布Tag的action
         ref: 'v2-dev'
+    - uses: azure/setup-helm@v1
+      with:
+        version: '3.7.2' # default is latest stable
+      id: installhelm
+    - id: helmrepoadd
+      run: helm repo add arkid https://harbor.longguikeji.com/chartrepo/public
+    - run: helm repo list
     - run: helm package chart
-    - run: ls
+    - run: helm push --username=${{ secrets.HARBORUSER }} --password=${{ secrets.HARBORPWD }} arkid-${{ github.event.inputs.prod_version }}.tgz arkid
