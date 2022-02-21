@@ -4,12 +4,25 @@ on:
   workflow_dispatch:
 
 jobs:
-  reTagAndPush:
+  package2harbor:
     runs-on: ubuntu-latest
     steps:
     - uses: azure/setup-helm@v1
       with:
         version: '3.7.2' # default is latest stable
       id: installhelm
-    - run: helm repo add arkid https://harbor.longguikeji.com/chartrepo/public
+    - id: helmrepoadd
+      run: helm repo add arkid https://harbor.longguikeji.com/chartrepo/public
     - run: helm repo list
+    - uses: actions/checkout@v2
+      with:
+        # Repository name with owner. For example, actions/checkout
+        # Default: ${{ github.repository }}
+        repository: 'longguikeji/arkid-charts'
+
+        # The branch, tag or SHA to checkout. When checking out the repository that
+        # triggered a workflow, this defaults to the reference or SHA for that event.
+        # Otherwise, uses the default branch.
+        ref: 'v2-dev'
+    - run: helm package chart
+    - run: ls
