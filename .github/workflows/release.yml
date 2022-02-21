@@ -1,0 +1,15 @@
+name: release to harbor
+
+on:
+  workflow_dispatch:
+
+jobs:
+  reTagAndPush:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: azure/setup-helm@v1
+      with:
+        version: '3.7.2' # default is latest stable
+      id: installhelm
+    - run: helm repo add arkid https://harbor.longguikeji.com/chartrepo/public
+    - run: helm repo list
