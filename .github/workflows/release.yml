@@ -3,34 +3,32 @@ name: release to harbor
 on:
   workflow_dispatch:
     inputs:
-      prod_version:
-        description: 'the tag of the charts to release, like `2.0.1`'
+      dev_version:
+        description: 'the tag of the image to release, like `dev-6-02dbc80`'
         default: ''
         required: true
-
+      prod_version:
+        description: 'the tag of the image,src to release, like `2.2.3`'
+        default: ''
+        required: true
+  push:
+    tags:
+      - '2.*.*'
+    tags-ignore:
+      - 'v1.*.*'
 jobs:
-  package2harbor:
+  reTagAndPush:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-      with:
-        # Repository name with owner. For example, actions/checkout
-        # Default: ${{ github.repository }}
-        repository: 'longguikeji/arkid-charts'
-
-        # The branch, tag or SHA to checkout. When checking out the repository that
-        # triggered a workflow, this defaults to the reference or SHA for that event.
-        # Otherwise, uses the default branch.
-        # git仓库的Tags == Chart.yaml/appVersion 
-        # 每次修改chart都要更新一下appVersion的小版本号
-        # 还需要写一个发布Tag的action
-        ref: 'v2-dev'
-    - uses: azure/setup-helm@v1
-      with:
-        version: '3.7.2' # default is latest stable
-      id: installhelm
-    - id: helmrepoadd
-      run: helm repo add arkid https://harbor.longguikeji.com/chartrepo/public
-    - run: helm repo list
-    - run: helm package chart
-    - run: helm push --username=${{ secrets.HARBORUSER }} --password=${{ secrets.HARBORPWD }} arkid-${{ github.event.inputs.prod_version }}.tgz arkid
+    - run: |
+        DEVVERSIONIN=${{ github.event.inputs.dev_version }}
+        DEVVERSION=${DEVVERSIONIN:-"v2dev"}
+        PRODVERSIONIN=${{ github.event.inputs.prod_version }}
+        PRODVERSION=${PRODVERSIONIN:-"${{ github.ref_name}}"}
+    - run: echo "${DEVVERSION}"
+    - run: echo "${PRODVERSION}"
+    - id: get-short-version
+      run: |
+        sversion="${PRODVERSION}"
+        echo "::set-output name=sversion::${sversion: 0 :3}"
+    - run: echo "${{steps.get-short-version.outputs.sversion}}"
