@@ -14,8 +14,7 @@ on:
   push:
     tags:
       - '2.*.*'
-    tags-ignore:
-      - 'v1.*.*'
+      - '!v1.*.*'
 jobs:
   reTagAndPush:
     runs-on: ubuntu-latest
