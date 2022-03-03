@@ -24,6 +24,8 @@ jobs:
         DEVVERSION=${DEVVERSIONIN:-"v2dev"}
         PRODVERSIONIN=${{ github.event.inputs.prod_version }}
         PRODVERSION=${PRODVERSIONIN:-"${{ github.ref_name}}"}
+        echo "DEVVERSION=$DEVVERSION" >> $GITHUB_ENV
+        echo "PRODVERSION=$PRODVERSION" >> $GITHUB_ENV
     - run: echo "${DEVVERSION}"
     - run: echo "${PRODVERSION}"
     - id: get-short-version
