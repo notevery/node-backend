@@ -30,7 +30,7 @@ jobs:
     - run: |
         ls
     - run: |
-        helm install --dry-run -n arkidv2 arkidv2 ./chart
+        helm install --dry-run -n arkidv2 arkidv2 ./chart \
         --set ingress.enabled=false \
         --set ingress.cert=false \
         --set ingress.tls=false \
