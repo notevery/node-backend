@@ -30,6 +30,18 @@ jobs:
     - run: |
         ls
     - run: |
-        helm install arkidv2 /arkid-charts/chart
+        helm install --dry-run -n arkidv2 arkidv2 ./chart
+        --set ingress.enabled=false \
+        --set ingress.cert=false \
+        --set ingress.tls=false \
+        --set ingress.host.name=\\{\\{ hostvars['arkos-master01']['ansible_ssh_host'] \\}\\}:32580 \
+        --set persistence.init=true \
+        --set persistence.size=10Gi \
+        --set portal.svcType=NodePort \
+        --set fe.image=longguikeji/arkid-fe:v2dev-72 \
+        --set be.image=longguikeji/arkid:v2dev-188 \
+        --set be.podAntiAffinity.type=soft > arkid.yaml
     - run: |
         helm list
+    - run: |
+        cat arkid.yaml
