@@ -34,7 +34,7 @@ jobs:
         --set ingress.enabled=false \
         --set ingress.cert=false \
         --set ingress.tls=false \
-        --set ingress.host.name={{ hostvars['arkos-master01']['ansible_ssh_host'] ]}}:32580 \
+        --set ingress.host.name={{hostvars['arkos-master01']['ansible_ssh_host']}}:32580 \
         --set persistence.init=true \
         --set persistence.size=10Gi \
         --set portal.svcType=NodePort \
