@@ -28,6 +28,8 @@ jobs:
         # Otherwise, uses the default branch.
         ref: 'v2-dev'
     - run: |
+        ls
+    - run: |
         helm install arkidv2 /arkid-charts/chart
     - run: |
         helm list
