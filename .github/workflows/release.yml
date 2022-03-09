@@ -36,9 +36,9 @@ jobs:
     - name: ReTag to Dockerhub 2.x.y
       uses: onichandame/docker-registry-sync-action@master
       with:
-        source_repository: "docker.io/longguikeji/arkid:${DEVVERSION}"
-        source_username: "${{ secrets.DOCKERHUBUSERNAME }}"
-        source_password: "${{ secrets.DOCKERHUBPWD }}"
-        target_repository: "docker.io/longguikeji/arkid:${PRODVERSION}"
-        target_username: "${{ secrets.DOCKERHUBUSERNAME }}"
-        target_password: "${{ secrets.DOCKERHUBPWD }}"
+        source_repository: "harbor.longguikeji.com/ark-develops/arkid:${DEVVERSION}"
+        source_username: "${{ secrets.HARBORUSER }}"
+        source_password: "${{ secrets.HARBORPWD }}"
+        target_repository: "harbor.longguikeji.com/ark-releases/arkid:${PRODVERSION}"
+        target_username: "${{ secrets.HARBORUSER }}"
+        target_password: "${{ secrets.HARBORPWD }}"
