@@ -5,7 +5,7 @@ on:
     inputs:
       dev_version:
         description: 'the tag of the image to release, like `dev-6-02dbc80`'
-        default: ''
+        default: 'v2dev'
         required: true
       prod_version:
         description: 'the tag of the image,src to release, like `2.2.3`'
@@ -33,3 +33,12 @@ jobs:
         sversion="${PRODVERSION}"
         echo "::set-output name=sversion::${sversion: 0 :3}"
     - run: echo "${{steps.get-short-version.outputs.sversion}}"
+    - name: ReTag to Dockerhub 2.x.y
+      uses: onichandame/docker-registry-sync-action@master
+      with:
+        source_repository: "docker.io/longguikeji/arkid:${DEVVERSION}"
+        source_username: "${{ secrets.DOCKERHUBUSERNAME }}"
+        source_password: "${{ secrets.DOCKERHUBPWD }}"
+        target_repository: "docker.io/longguikeji/arkid:${PRODVERSION}"
+        target_username: "${{ secrets.DOCKERHUBUSERNAME }}"
+        target_password: "${{ secrets.DOCKERHUBPWD }}"
