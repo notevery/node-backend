@@ -28,17 +28,19 @@ jobs:
         echo "PRODVERSION=$PRODVERSION" >> $GITHUB_ENV
     - run: echo "${DEVVERSION}"
     - run: echo "${PRODVERSION}"
-    - id: get-short-version
+    - id: get-versions
       run: |
         sversion="${PRODVERSION}"
         echo "::set-output name=sversion::${sversion: 0 :3}"
-    - run: echo "${{steps.get-short-version.outputs.sversion}}"
+        echo "::set-output name=DEVVERSION::${DEVVERSION}"
+        echo "::set-output name=PRODVERSION::${PRODVERSION}"
+    - run: echo "${{steps.get-versions.outputs.sversion}}"
     - name: ReTag to Dockerhub 2.x.y
       uses: onichandame/docker-registry-sync-action@master
       with:
-        source_repository: "harbor.longguikeji.com/ark-develops/arkid:${DEVVERSION}"
+        source_repository: "harbor.longguikeji.com/ark-develops/arkid:${{steps.get-versions.outputs.DEVVERSION}}"
         source_username: "${{ secrets.HARBORUSER }}"
         source_password: "${{ secrets.HARBORPWD }}"
-        target_repository: "harbor.longguikeji.com/ark-releases/arkid:${PRODVERSION}"
+        target_repository: "harbor.longguikeji.com/ark-releases/arkid:${{steps.get-versions.outputs.PRODVERSION}}"
         target_username: "${{ secrets.HARBORUSER }}"
         target_password: "${{ secrets.HARBORPWD }}"
