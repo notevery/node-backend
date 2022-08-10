@@ -27,3 +27,4 @@ jobs:
         ref: 'master'
         path: 'arkid_extensions'
         token: '${{ secrets.TOKEN }}'
+    - run: ls arkid_extensions
