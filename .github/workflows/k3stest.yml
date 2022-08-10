@@ -27,6 +27,7 @@ jobs:
         # triggered a workflow, this defaults to the reference or SHA for that event.
         # Otherwise, uses the default branch.
         ref: 'master'
+        token: '${{ secret.TOKEN }}'
     - uses: actions/checkout@v3
       with:
         # Repository name with owner. For example, actions/checkout
