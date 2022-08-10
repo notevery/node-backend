@@ -1,0 +1,29 @@
+name: testprivate
+on:
+  workflow_dispatch:
+jobs:
+  buildyaml:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        # Repository name with owner. For example, actions/checkout
+        # Default: ${{ github.repository }}
+        repository: 'longguikeji/arkid'
+        # The branch, tag or SHA to checkout. When checking out the repository that
+        # triggered a workflow, this defaults to the reference or SHA for that event.
+        # Otherwise, uses the default branch.
+        ref: 'v2.5-dev'
+    - run: ls
+    - run: rm -rf arkid_extensions
+    - uses: actions/checkout@v3
+      with:
+        # Repository name with owner. For example, actions/checkout
+        # Default: ${{ github.repository }}
+        repository: 'notevery/dockerfiles'
+        # The branch, tag or SHA to checkout. When checking out the repository that
+        # triggered a workflow, this defaults to the reference or SHA for that event.
+        # Otherwise, uses the default branch.
+        ref: 'master'
+        path: 'arkid_extensions'
+        token: '${{ secrets.TOKEN }}'
