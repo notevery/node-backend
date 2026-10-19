@@ -4,12 +4,12 @@ WORKDIR /oauth
 
 COPY . /oauth
 
-ENV CLIENT_ID=abcn82LQg9kXrVsI7CC0QG2Zap6SM6K4REsHQOl0 \
-    CLIENT_SECRET=ZDMmLZ7dsMacHhnK8AQLjiKwCb4joFkx2FylADePGKk56nbOJ1zuEyObhiyKLHiGz9dkq3oGLFKrn70dqvc9Zb28ECwovP0WA6TG0SofjO5SwXncsmNoSAOybpgd3Zy4 \
-    AUTHORIZE_URI=https://arkid.demo.longguikeji.com/oauth/authorize/ \
-    ACCESS_TOKEN_URI=https://arkid.demo.longguikeji.com/oauth/token/ \
-    USERINFO_URI=https://arkid.demo.longguikeji.com/oauth/userinfo/ \
-    REDIRECT_URI=http://124.70.55.171:8998/oauth/redirect
+ENV CLIENT_ID=apRGiZToTQtFxVezkypoXOv1LnLbbZgXFxcnlZPI \
+    CLIENT_SECRET=zNTn2ag9jbEGDWsfjBbpB9bsGPrHjeosEJ7WnBd0zHwtprIxoWgeWR44lNikG5V6zSGDsHkz2VqRddkx78xhIogOpL5eOKbGltxKRGldbEYwyoKO5hMCDp70bbGQSRCX \
+    AUTHORIZE_URI=https://arkid.vtwo.longguikeji.com/api/v1/tenant/84c6e0f9-f777-4bba-89f1-67c2274b1f78/oauth/authorize/ \
+    ACCESS_TOKEN_URI=https://arkid.vtwo.longguikeji.com/api/v1/tenant/84c6e0f9-f777-4bba-89f1-67c2274b1f78/oauth/token/ \
+    USERINFO_URI=https://arkid.vtwo.longguikeji.com/api/v1/tenant/84c6e0f9-f777-4bba-89f1-67c2274b1f78/oauth/userinfo/ \
+    REDIRECT_URI=http://localhost:8000/oauth/redirect
 
 RUN sed -i "s/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g" /etc/apk/repositories &&\
     apk update &&\
