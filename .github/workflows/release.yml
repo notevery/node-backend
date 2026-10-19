@@ -1,0 +1,46 @@
+name: release to harbor
+
+on:
+  workflow_dispatch:
+    inputs:
+      dev_version:
+        description: 'the tag of the image to release, like `dev-6-02dbc80`'
+        default: 'v2dev'
+        required: true
+      prod_version:
+        description: 'the tag of the image,src to release, like `2.2.3`'
+        default: ''
+        required: true
+  push:
+    tags:
+      - '2.*.*'
+      - '!v1.*.*'
+jobs:
+  reTagAndPush:
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+        DEVVERSIONIN=${{ github.event.inputs.dev_version }}
+        DEVVERSION=${DEVVERSIONIN:-"v2dev"}
+        PRODVERSIONIN=${{ github.event.inputs.prod_version }}
+        PRODVERSION=${PRODVERSIONIN:-"${{ github.ref_name}}"}
+        echo "DEVVERSION=$DEVVERSION" >> $GITHUB_ENV
+        echo "PRODVERSION=$PRODVERSION" >> $GITHUB_ENV
+    - run: echo "${DEVVERSION}"
+    - run: echo "${PRODVERSION}"
+    - id: get-versions
+      run: |
+        sversion="${PRODVERSION}"
+        echo "::set-output name=sversion::${sversion: 0 :3}"
+        echo "::set-output name=DEVVERSION::${DEVVERSION}"
+        echo "::set-output name=PRODVERSION::${PRODVERSION}"
+    - run: echo "${{steps.get-versions.outputs.sversion}}"
+    - name: ReTag to Dockerhub 2.x.y
+      uses: onichandame/docker-registry-sync-action@master
+      with:
+        source_repository: "harbor.longguikeji.com/ark-develops/arkid:${{steps.get-versions.outputs.DEVVERSION}}"
+        source_username: "${{ secrets.HARBORUSER }}"
+        source_password: "${{ secrets.HARBORPWD }}"
+        target_repository: "harbor.longguikeji.com/ark-releases/arkid:${{steps.get-versions.outputs.PRODVERSION}}"
+        target_username: "${{ secrets.HARBORUSER }}"
+        target_password: "${{ secrets.HARBORPWD }}"

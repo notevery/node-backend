@@ -1,5 +1,7 @@
 // Fill in your client ID and client secret that you obtained
 // while registering the application
+//https://arkid.vtwo.longguikeji.com/api/v1/tenant/84c6e0f9-f777-4bba-89f1-67c2274b1f78/oauth/authorize/?access_type=offline&client_id=apRGiZToTQtFxVezkypoXOv1LnLbbZgXFxcnlZPI&nonce=nO2wRe1f3zUH50mwVDfpkuPuyqW4_SRTP2EaQf3J1lY&redirect_uri=http://localhost:8000/oauth/redirect&response_type=code&scope=openid&state=xyz
+
 
 const Koa = require('koa');
 const path = require('path');
@@ -155,7 +157,7 @@ const oauth = async ctx => {
   	//    accept: 'application/json'
   	//  }
   	//});
-
+  console.log(tokenResponse.data)
   const accessToken = tokenResponse.data.access_token;
   console.log(`access token: ${accessToken}`);
 
@@ -169,7 +171,7 @@ const oauth = async ctx => {
     }
   });
   console.log(result.data);
-  const name = result.data.data.user.name;
+  // const name = result.data.data.user.name;
   // ss = body.exp.toUTCString();
   // ctx.response.headers('Set-Cookie', 'token=asdf')
 // res.cookie('id_token' ,body.id_token, {expires: s});
